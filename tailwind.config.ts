@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,17 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Inventory System Colors
+				"white": "#ffffff",
+				"safety-yellow": "#f3d70e",
+				"minion-yellow": "#f5e35e",
+				"honey-yellow": "#fbb339",
+				"rich-black": "#040707",
+				"success": "#4ade80",
+				"danger": "#f43f5e",
+				"warning": "#f59e0b",
+				"info": "#3b82f6",
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

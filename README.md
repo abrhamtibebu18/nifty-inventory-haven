@@ -1,69 +1,76 @@
-# Welcome to your Lovable project
 
-## Project info
+# Inventory Management System
+
+A comprehensive and user-friendly system for efficient tracking and management of stock levels, sales, and procurement processes for businesses.
+
+## Live Project URL
 
 **URL**: https://lovable.dev/projects/a73c5f28-ef61-49ee-9498-63575907a329
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- **Dashboard**: Overview of key metrics like total products, stock levels, recent sales, and low-stock alerts
+- **Product Management**: Add, edit, and delete products with comprehensive details
+- **Inventory Tracking**: Monitor stock levels with real-time updates and alerts
+- **Declaration Management**: Handle inventory declarations with status tracking
+- **User Interface**: Clean, intuitive and responsive design inspired by the Sprix Inventory Hub
 
-**Use Lovable**
+## Color Scheme
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/a73c5f28-ef61-49ee-9498-63575907a329) and start prompting.
+The application uses a vibrant color scheme based on yellow and black:
+- White: #ffffff
+- Safety Yellow: #f3d70e
+- Minion Yellow: #f5e35e
+- Honey Yellow: #fbb339
+- Rich Black: #040707
 
-Changes made via Lovable will be committed automatically to this repo.
+## Technology Stack
 
-**Use your preferred IDE**
+- **Frontend**: React with TypeScript
+- **UI Components**: shadcn/ui
+- **Styling**: Tailwind CSS
+- **State Management**: React Query
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Getting Started
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+1. Clone the repository:
+```
 git clone <YOUR_GIT_URL>
+```
 
-# Step 2: Navigate to the project directory.
+2. Navigate to the project directory:
+```
 cd <YOUR_PROJECT_NAME>
+```
 
-# Step 3: Install the necessary dependencies.
+3. Install dependencies:
+```
 npm i
+```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+4. Start the development server:
+```
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Project Structure
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- `/components`: Reusable UI components
+- `/pages`: Main application pages
+- `/hooks`: Custom React hooks
+- `/lib`: Utility functions
 
-**Use GitHub Codespaces**
+## Available Pages
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- **Dashboard**: Main overview page with key metrics and summaries
+- **Products**: Manage and view product inventory
+- **Declarations**: Track and manage inventory declarations
+- **Login**: User authentication
 
-## What technologies are used for this project?
+## Future Enhancements
 
-This project is built with .
+- User role management
+- Advanced reporting and analytics
+- Supplier and purchase order management
+- Mobile application support
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/a73c5f28-ef61-49ee-9498-63575907a329) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
