@@ -49,34 +49,36 @@ const inventoryCategories = [
   { name: "Other Hardware", count: 112, color: "bg-purple-500", percentage: 26 }
 ];
 
+// Fix the type for yourDevices - ensure status values match the required type
 const yourDevices = [
   {
     id: "1",
     vendor: "TP-LINK",
     product: "3G/4G WIRELESS N ROUTER",
-    status: "Store",
+    status: "Store" as const,
     location: "BloomTech"
   },
   {
     id: "2",
     vendor: "TP-LINK",
     product: "3G/4G WIRELESS N ROUTER",
-    status: "Store",
+    status: "Store" as const,
     location: "BloomTech"
   },
   {
     id: "3",
     vendor: "TP-LINK",
     product: "3G/4G WIRELESS N ROUTER",
-    status: "Check",
+    status: "Check" as const,
     location: "BloomTech"
   }
 ];
 
+// Fix the type for recentActivity - ensure type values match the required type
 const recentActivity = [
   {
     id: "1",
-    type: "add",
+    type: "add" as const,
     title: "Added new device",
     description: "UISP airMAX NanoStation 5AC Loco",
     user: "Abraham Tibebu",
@@ -84,7 +86,7 @@ const recentActivity = [
   },
   {
     id: "2",
-    type: "update",
+    type: "update" as const,
     title: "Updated stock count",
     description: "Fiber Patch Cable 100m",
     user: "Kedir Yusuf",
@@ -92,7 +94,7 @@ const recentActivity = [
   },
   {
     id: "3",
-    type: "transfer",
+    type: "transfer" as const,
     title: "Transferred item",
     description: "Ethernet Cable Cat6 3m",
     user: "Dawit Tesfaye",

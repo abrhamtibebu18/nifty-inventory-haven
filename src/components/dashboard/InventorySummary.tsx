@@ -1,6 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
 
 interface InventoryCategory {
   name: string;
@@ -27,7 +28,14 @@ export function InventorySummary({ categories }: InventorySummaryProps) {
                 <span className="text-sm font-medium">{category.name}</span>
                 <span className="text-sm text-muted-foreground">{category.count} units</span>
               </div>
-              <Progress value={category.percentage} className="h-2" indicatorClassName={category.color} />
+              <Progress 
+                value={category.percentage} 
+                className="h-2" 
+                // Use the styling directly on the Progress component
+                style={{ 
+                  "--progress-indicator-color": `var(--${category.color.replace('bg-', '')})` 
+                } as React.CSSProperties}
+              />
             </div>
           ))}
         </div>
