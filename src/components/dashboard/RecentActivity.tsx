@@ -2,7 +2,7 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { CircleAlert, CircleCheck } from "lucide-react";
 
-interface ActivityItem {
+export interface ActivityItem {
   id: string;
   type: "add" | "update" | "transfer";
   title: string;
