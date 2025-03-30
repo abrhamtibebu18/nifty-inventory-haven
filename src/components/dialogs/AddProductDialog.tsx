@@ -1,11 +1,12 @@
 
 import { useState } from "react";
-import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogHeader, DialogFooter } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { X, Save, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 
 interface AddProductDialogProps {
@@ -14,12 +15,16 @@ interface AddProductDialogProps {
 }
 
 export function AddProductDialog({ open, onOpenChange }: AddProductDialogProps) {
+  const [vendor, setVendor] = useState("");
+  const [productType, setProductType] = useState("");
   const [productName, setProductName] = useState("");
-  const [productSKU, setProductSKU] = useState("");
-  const [productCategory, setProductCategory] = useState("");
-  const [productVendor, setProductVendor] = useState("");
+  const [minimumThreshold, setMinimumThreshold] = useState("");
+  const [criticalThreshold, setCriticalThreshold] = useState("");
+  const [productId, setProductId] = useState("");
+  const [partNo, setPartNo] = useState("");
+  const [hsCode, setHsCode] = useState("");
+  const [upcCode, setUpcCode] = useState("");
   const [productDescription, setProductDescription] = useState("");
-  const [productQuantity, setProductQuantity] = useState("");
   
   const handleSubmit = () => {
     if (!productName) {
@@ -27,13 +32,13 @@ export function AddProductDialog({ open, onOpenChange }: AddProductDialogProps) 
       return;
     }
     
-    if (!productSKU) {
-      toast.error("Please enter a product SKU");
+    if (!vendor) {
+      toast.error("Please select a vendor");
       return;
     }
     
-    if (!productCategory) {
-      toast.error("Please select a product category");
+    if (!productType) {
+      toast.error("Please select a product type");
       return;
     }
     
@@ -46,104 +51,185 @@ export function AddProductDialog({ open, onOpenChange }: AddProductDialogProps) 
   };
   
   const resetForm = () => {
+    setVendor("");
+    setProductType("");
     setProductName("");
-    setProductSKU("");
-    setProductCategory("");
-    setProductVendor("");
+    setMinimumThreshold("");
+    setCriticalThreshold("");
+    setProductId("");
+    setPartNo("");
+    setHsCode("");
+    setUpcCode("");
     setProductDescription("");
-    setProductQuantity("");
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle className="text-xl">Add New Product</DialogTitle>
-          <DialogDescription>Add a new product to inventory</DialogDescription>
+      <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto p-0">
+        <DialogHeader className="p-4 border-b flex flex-row items-center justify-between sticky top-0 bg-background z-10">
+          <h2 className="text-xl font-bold uppercase">NEW PRODUCT</h2>
+          <div className="flex items-center gap-3">
+            <Button onClick={handleSubmit} variant="default" className="bg-blue-500 hover:bg-blue-600">
+              SAVE
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => onOpenChange(false)}
+              className="rounded-full h-8 w-8 p-0"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
         </DialogHeader>
         
-        <div className="space-y-4 my-4">
-          <div className="space-y-2">
-            <Label htmlFor="productName">Product Name</Label>
-            <Input 
-              id="productName" 
-              placeholder="Enter product name"
-              value={productName}
-              onChange={(e) => setProductName(e.target.value)}
-            />
+        <div className="p-6 space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-1">
+              <Label htmlFor="vendor" className="text-sm font-normal">Vendor</Label>
+              <Select value={vendor} onValueChange={setVendor}>
+                <SelectTrigger id="vendor" placeholder="select vendor">
+                  <SelectValue placeholder="select vendor" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="tp-link">TP-Link</SelectItem>
+                  <SelectItem value="ubiquiti">Ubiquiti</SelectItem>
+                  <SelectItem value="cisco">Cisco</SelectItem>
+                  <SelectItem value="huawei">Huawei</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="space-y-1">
+              <Label htmlFor="productType" className="text-sm font-normal">Product Type</Label>
+              <Select value={productType} onValueChange={setProductType}>
+                <SelectTrigger id="productType">
+                  <SelectValue placeholder="select product type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="network-devices">Network Devices</SelectItem>
+                  <SelectItem value="accessories">Accessories</SelectItem>
+                  <SelectItem value="cables">Cables</SelectItem>
+                  <SelectItem value="other-hardware">Other Hardware</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="productSKU">Product SKU</Label>
-            <Input 
-              id="productSKU" 
-              placeholder="Enter product SKU"
-              value={productSKU}
-              onChange={(e) => setProductSKU(e.target.value)}
-            />
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="md:col-span-2 space-y-1">
+              <Label htmlFor="productName" className="text-sm font-normal">Product Name</Label>
+              <Input 
+                id="productName" 
+                placeholder="enter product name"
+                value={productName}
+                onChange={(e) => setProductName(e.target.value)}
+              />
+              <p className="text-xs text-muted-foreground mt-1">name of the product</p>
+            </div>
+            
+            <div className="space-y-1">
+              <Label htmlFor="minimumThreshold" className="text-sm font-normal">Minimum Threshold</Label>
+              <Input 
+                id="minimumThreshold" 
+                placeholder="enter minimum threshold"
+                value={minimumThreshold}
+                onChange={(e) => setMinimumThreshold(e.target.value)}
+              />
+            </div>
+            
+            <div className="space-y-1">
+              <Label htmlFor="criticalThreshold" className="text-sm font-normal">Critical Threshold</Label>
+              <Input 
+                id="criticalThreshold" 
+                placeholder="enter critical threshold"
+                value={criticalThreshold}
+                onChange={(e) => setCriticalThreshold(e.target.value)}
+              />
+            </div>
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="productCategory">Category</Label>
-            <Select value={productCategory} onValueChange={setProductCategory}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select category" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="network-devices">Network Devices</SelectItem>
-                <SelectItem value="accessories">Accessories</SelectItem>
-                <SelectItem value="cables">Cables</SelectItem>
-                <SelectItem value="other-hardware">Other Hardware</SelectItem>
-              </SelectContent>
-            </Select>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-1">
+              <Label htmlFor="productId" className="text-sm font-normal">Product ID</Label>
+              <Input 
+                id="productId" 
+                placeholder="enter product id"
+                value={productId}
+                onChange={(e) => setProductId(e.target.value)}
+              />
+              <p className="text-xs text-muted-foreground mt-1">unique id used by the manufacturer to identify the product</p>
+            </div>
+            
+            <div className="space-y-1">
+              <Label htmlFor="partNo" className="text-sm font-normal">Part No</Label>
+              <Input 
+                id="partNo" 
+                placeholder="enter product part no"
+                value={partNo}
+                onChange={(e) => setPartNo(e.target.value)}
+              />
+              <p className="text-xs text-muted-foreground mt-1">unique part no used by the manufacturer to identify the product</p>
+            </div>
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="productVendor">Vendor</Label>
-            <Select value={productVendor} onValueChange={setProductVendor}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select vendor" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="tp-link">TP-Link</SelectItem>
-                <SelectItem value="ubiquiti">Ubiquiti</SelectItem>
-                <SelectItem value="cisco">Cisco</SelectItem>
-                <SelectItem value="huawei">Huawei</SelectItem>
-              </SelectContent>
-            </Select>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-1">
+              <Label htmlFor="hsCode" className="text-sm font-normal">HS-CODE</Label>
+              <Input 
+                id="hsCode" 
+                placeholder="enter hs code for the project"
+                value={hsCode}
+                onChange={(e) => setHsCode(e.target.value)}
+              />
+              <p className="text-xs text-muted-foreground mt-1">customs authorities code used to identify this product</p>
+            </div>
+            
+            <div className="space-y-1 relative">
+              <Label htmlFor="upcCode" className="text-sm font-normal">UPC-CODE</Label>
+              <div className="flex">
+                <Input 
+                  id="upcCode" 
+                  placeholder="enter UPC code for the project"
+                  value={upcCode}
+                  onChange={(e) => setUpcCode(e.target.value)}
+                  className="pr-10"
+                />
+                <Button 
+                  type="button" 
+                  variant="ghost" 
+                  size="icon" 
+                  className="absolute right-0 top-6 h-10"
+                >
+                  <RefreshCw className="h-4 w-4" />
+                </Button>
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">code used by the manufacturer to identify the product name</p>
+            </div>
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="productQuantity">Initial Quantity</Label>
-            <Input 
-              id="productQuantity" 
-              type="number"
-              placeholder="Enter initial quantity"
-              value={productQuantity}
-              onChange={(e) => setProductQuantity(e.target.value)}
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="productDescription">Description</Label>
+          <div className="space-y-1">
+            <Label htmlFor="productDescription" className="text-sm font-normal">Product Description</Label>
             <Textarea 
               id="productDescription" 
-              placeholder="Enter product description"
+              placeholder="enter product description"
               value={productDescription}
               onChange={(e) => setProductDescription(e.target.value)}
-              rows={3}
+              rows={5}
             />
+            <p className="text-xs text-muted-foreground mt-1">specify a brief description of the product. i.e what it does or how it works</p>
+          </div>
+          
+          <div className="space-y-1">
+            <Label htmlFor="productImages" className="text-sm font-normal">Product Images</Label>
+            <div className="border rounded-md p-4 flex items-center gap-2 bg-muted/20">
+              <Button variant="outline" size="sm" className="text-sm">
+                <span className="mr-2">📎</span>
+                Product Images
+              </Button>
+            </div>
           </div>
         </div>
-        
-        <DialogFooter>
-          <Button 
-            onClick={handleSubmit}
-            className="w-full bg-safety-yellow hover:bg-safety-yellow/90 text-black"
-          >
-            Add Product
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

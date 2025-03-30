@@ -1,11 +1,12 @@
 
 import { useState } from "react";
-import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogHeader, DialogFooter } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { X, Save } from "lucide-react";
 import { toast } from "sonner";
 
 interface CreateFacilityDialogProps {
@@ -16,8 +17,9 @@ interface CreateFacilityDialogProps {
 export function CreateFacilityDialog({ open, onOpenChange }: CreateFacilityDialogProps) {
   const [facilityName, setFacilityName] = useState("");
   const [facilityType, setFacilityType] = useState("");
-  const [facilityLocation, setFacilityLocation] = useState("");
+  const [facilityAddress, setFacilityAddress] = useState("");
   const [facilityManager, setFacilityManager] = useState("");
+  const [facilityCoordinates, setFacilityCoordinates] = useState("");
   const [facilityDescription, setFacilityDescription] = useState("");
   
   const handleSubmit = () => {
@@ -31,8 +33,8 @@ export function CreateFacilityDialog({ open, onOpenChange }: CreateFacilityDialo
       return;
     }
     
-    if (!facilityLocation) {
-      toast.error("Please enter a facility location");
+    if (!facilityAddress) {
+      toast.error("Please enter a facility address");
       return;
     }
     
@@ -47,35 +49,49 @@ export function CreateFacilityDialog({ open, onOpenChange }: CreateFacilityDialo
   const resetForm = () => {
     setFacilityName("");
     setFacilityType("");
-    setFacilityLocation("");
+    setFacilityAddress("");
     setFacilityManager("");
+    setFacilityCoordinates("");
     setFacilityDescription("");
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle className="text-xl">Create New Facility</DialogTitle>
-          <DialogDescription>Add a new facility to the system</DialogDescription>
+      <DialogContent className="sm:max-w-[600px] p-0">
+        <DialogHeader className="p-6 border-b flex flex-row items-center justify-between">
+          <h2 className="text-xl font-bold uppercase">NEW FACILITY</h2>
+          <div className="flex items-center gap-3">
+            <Button onClick={handleSubmit} variant="default" className="bg-gray-600 hover:bg-gray-700">
+              <Save className="mr-2 h-4 w-4" />
+              SAVE
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => onOpenChange(false)}
+              className="rounded-full h-8 w-8 p-0"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
         </DialogHeader>
         
-        <div className="space-y-4 my-4">
-          <div className="space-y-2">
-            <Label htmlFor="facilityName">Facility Name</Label>
+        <div className="p-6 space-y-6">
+          <div className="space-y-1">
+            <Label htmlFor="facilityName" className="text-sm font-normal">Facility Name</Label>
             <Input 
               id="facilityName" 
-              placeholder="Enter facility name"
+              placeholder="enter facility name"
               value={facilityName}
               onChange={(e) => setFacilityName(e.target.value)}
             />
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="facilityType">Facility Type</Label>
+          <div className="space-y-1">
+            <Label htmlFor="facilityType" className="text-sm font-normal">Facility Type</Label>
             <Select value={facilityType} onValueChange={setFacilityType}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select facility type" />
+              <SelectTrigger id="facilityType">
+                <SelectValue placeholder="select facility type" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="warehouse">Warehouse</SelectItem>
@@ -86,46 +102,49 @@ export function CreateFacilityDialog({ open, onOpenChange }: CreateFacilityDialo
             </Select>
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="facilityLocation">Location</Label>
-            <Input 
-              id="facilityLocation" 
-              placeholder="Enter facility location"
-              value={facilityLocation}
-              onChange={(e) => setFacilityLocation(e.target.value)}
+          <div className="space-y-1">
+            <Label htmlFor="facilityAddress" className="text-sm font-normal">Facility Address</Label>
+            <Textarea 
+              id="facilityAddress" 
+              placeholder="enter facility address"
+              value={facilityAddress}
+              onChange={(e) => setFacilityAddress(e.target.value)}
+              rows={3}
             />
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="facilityManager">Facility Manager</Label>
+          <div className="space-y-1">
+            <Label htmlFor="facilityManager" className="text-sm font-normal">Facility Manager</Label>
             <Input 
               id="facilityManager" 
-              placeholder="Enter facility manager"
+              placeholder="enter facility manager"
               value={facilityManager}
               onChange={(e) => setFacilityManager(e.target.value)}
             />
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="facilityDescription">Description</Label>
+          <div className="space-y-1">
+            <Label htmlFor="facilityCoordinates" className="text-sm font-normal">Facility Coordinates</Label>
+            <Input 
+              id="facilityCoordinates" 
+              placeholder="enter facility coordinates (latitude, longitude)"
+              value={facilityCoordinates}
+              onChange={(e) => setFacilityCoordinates(e.target.value)}
+            />
+            <p className="text-xs text-muted-foreground mt-1">e.g 8.999080, 9.123456</p>
+          </div>
+          
+          <div className="space-y-1">
+            <Label htmlFor="facilityDescription" className="text-sm font-normal">Facility Description</Label>
             <Textarea 
               id="facilityDescription" 
-              placeholder="Enter facility description"
+              placeholder="enter facility description"
               value={facilityDescription}
               onChange={(e) => setFacilityDescription(e.target.value)}
-              rows={3}
+              rows={4}
             />
           </div>
         </div>
-        
-        <DialogFooter>
-          <Button 
-            onClick={handleSubmit}
-            className="w-full bg-safety-yellow hover:bg-safety-yellow/90 text-black"
-          >
-            Create Facility
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

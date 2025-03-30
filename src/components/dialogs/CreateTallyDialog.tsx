@@ -1,10 +1,11 @@
 
 import { useState } from "react";
-import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogHeader, DialogFooter } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { X, Save } from "lucide-react";
 import { toast } from "sonner";
 
 interface CreateTallyDialogProps {
@@ -49,28 +50,41 @@ export function CreateTallyDialog({ open, onOpenChange }: CreateTallyDialogProps
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle className="text-xl">Create New Tally</DialogTitle>
-          <DialogDescription>Create a new tally sheet</DialogDescription>
+      <DialogContent className="sm:max-w-[600px] p-0">
+        <DialogHeader className="p-6 border-b flex flex-row items-center justify-between">
+          <h2 className="text-xl font-bold uppercase">NEW TALLY</h2>
+          <div className="flex items-center gap-3">
+            <Button onClick={handleSubmit} variant="default" className="bg-gray-600 hover:bg-gray-700">
+              <Save className="mr-2 h-4 w-4" />
+              SAVE
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => onOpenChange(false)}
+              className="rounded-full h-8 w-8 p-0"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
         </DialogHeader>
         
-        <div className="space-y-4 my-4">
-          <div className="space-y-2">
-            <Label htmlFor="tallyName">Tally Name</Label>
+        <div className="p-6 space-y-6">
+          <div className="space-y-1">
+            <Label htmlFor="tallyName" className="text-sm font-normal">Tally Name</Label>
             <Input 
               id="tallyName" 
-              placeholder="Enter tally name"
+              placeholder="enter tally name"
               value={tallyName}
               onChange={(e) => setTallyName(e.target.value)}
             />
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="tallyStore">Store</Label>
+          <div className="space-y-1">
+            <Label htmlFor="tallyStore" className="text-sm font-normal">Store</Label>
             <Select value={tallyStore} onValueChange={setTallyStore}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select store" />
+              <SelectTrigger id="tallyStore">
+                <SelectValue placeholder="select store" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="bloomtech">BloomTech</SelectItem>
@@ -81,11 +95,11 @@ export function CreateTallyDialog({ open, onOpenChange }: CreateTallyDialogProps
             </Select>
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="tallyType">Tally Type</Label>
+          <div className="space-y-1">
+            <Label htmlFor="tallyType" className="text-sm font-normal">Tally Type</Label>
             <Select value={tallyType} onValueChange={setTallyType}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select tally type" />
+              <SelectTrigger id="tallyType">
+                <SelectValue placeholder="select tally type" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="full">Full Inventory</SelectItem>
@@ -95,15 +109,6 @@ export function CreateTallyDialog({ open, onOpenChange }: CreateTallyDialogProps
             </Select>
           </div>
         </div>
-        
-        <DialogFooter>
-          <Button 
-            onClick={handleSubmit}
-            className="w-full bg-safety-yellow hover:bg-safety-yellow/90 text-black"
-          >
-            Create Tally
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

@@ -24,6 +24,7 @@ import Reports from "./pages/Reports";
 import Eligibility from "./pages/Eligibility";
 import Devices from "./pages/Devices";
 import Batches from "./pages/Batches";
+import BatchDetail from "./pages/BatchDetail";
 import NotFound from "./pages/NotFound";
 
 import "./App.css";
@@ -53,7 +54,7 @@ function App() {
         <Route path="/eligibility" element={<Eligibility />} />
         <Route path="/devices" element={<Devices />} />
         <Route path="/batches" element={<Batches />} />
-        <Route path="/batches/:id" element={<ProductDetail />} />
+        <Route path="/batches/:id" element={<BatchDetail />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster />

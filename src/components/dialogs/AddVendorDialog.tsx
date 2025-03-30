@@ -1,10 +1,11 @@
 
 import { useState } from "react";
-import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogHeader, DialogFooter } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { X, Save } from "lucide-react";
 import { toast } from "sonner";
 
 interface AddVendorDialogProps {
@@ -14,10 +15,8 @@ interface AddVendorDialogProps {
 
 export function AddVendorDialog({ open, onOpenChange }: AddVendorDialogProps) {
   const [vendorName, setVendorName] = useState("");
-  const [vendorContact, setVendorContact] = useState("");
-  const [vendorEmail, setVendorEmail] = useState("");
-  const [vendorPhone, setVendorPhone] = useState("");
-  const [vendorAddress, setVendorAddress] = useState("");
+  const [vendorCode, setVendorCode] = useState("");
+  const [vendorDescription, setVendorDescription] = useState("");
   
   const handleSubmit = () => {
     if (!vendorName) {
@@ -25,13 +24,8 @@ export function AddVendorDialog({ open, onOpenChange }: AddVendorDialogProps) {
       return;
     }
     
-    if (!vendorContact) {
-      toast.error("Please enter a contact person");
-      return;
-    }
-    
-    if (!vendorEmail) {
-      toast.error("Please enter an email address");
+    if (!vendorCode) {
+      toast.error("Please enter a vendor code");
       return;
     }
     
@@ -45,82 +39,63 @@ export function AddVendorDialog({ open, onOpenChange }: AddVendorDialogProps) {
   
   const resetForm = () => {
     setVendorName("");
-    setVendorContact("");
-    setVendorEmail("");
-    setVendorPhone("");
-    setVendorAddress("");
+    setVendorCode("");
+    setVendorDescription("");
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle className="text-xl">Add New Vendor</DialogTitle>
-          <DialogDescription>Add a new vendor to the system</DialogDescription>
+      <DialogContent className="sm:max-w-[600px] p-0">
+        <DialogHeader className="p-6 border-b flex flex-row items-center justify-between">
+          <h2 className="text-xl font-bold uppercase">NEW VENDOR</h2>
+          <div className="flex items-center gap-3">
+            <Button onClick={handleSubmit} variant="default" className="bg-gray-600 hover:bg-gray-700">
+              <Save className="mr-2 h-4 w-4" />
+              SAVE
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => onOpenChange(false)}
+              className="rounded-full h-8 w-8 p-0"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
         </DialogHeader>
         
-        <div className="space-y-4 my-4">
-          <div className="space-y-2">
-            <Label htmlFor="vendorName">Vendor Name</Label>
+        <div className="p-6 space-y-6">
+          <div className="space-y-1">
+            <Label htmlFor="vendorName" className="text-sm font-normal">Vendor Name</Label>
             <Input 
               id="vendorName" 
-              placeholder="Enter vendor name"
+              placeholder="enter vendor name"
               value={vendorName}
               onChange={(e) => setVendorName(e.target.value)}
             />
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="vendorContact">Contact Person</Label>
+          <div className="space-y-1">
+            <Label htmlFor="vendorCode" className="text-sm font-normal">Vendor Code</Label>
             <Input 
-              id="vendorContact" 
-              placeholder="Enter contact person"
-              value={vendorContact}
-              onChange={(e) => setVendorContact(e.target.value)}
+              id="vendorCode" 
+              placeholder="enter vendor code"
+              value={vendorCode}
+              onChange={(e) => setVendorCode(e.target.value)}
             />
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="vendorEmail">Email</Label>
-            <Input 
-              id="vendorEmail" 
-              type="email"
-              placeholder="Enter email address"
-              value={vendorEmail}
-              onChange={(e) => setVendorEmail(e.target.value)}
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="vendorPhone">Phone</Label>
-            <Input 
-              id="vendorPhone" 
-              placeholder="Enter phone number"
-              value={vendorPhone}
-              onChange={(e) => setVendorPhone(e.target.value)}
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="vendorAddress">Address</Label>
+          <div className="space-y-1">
+            <Label htmlFor="vendorDescription" className="text-sm font-normal">Vendor Description</Label>
             <Textarea 
-              id="vendorAddress" 
-              placeholder="Enter vendor address"
-              value={vendorAddress}
-              onChange={(e) => setVendorAddress(e.target.value)}
-              rows={3}
+              id="vendorDescription" 
+              placeholder="enter vendor description"
+              value={vendorDescription}
+              onChange={(e) => setVendorDescription(e.target.value)}
+              rows={4}
             />
           </div>
         </div>
-        
-        <DialogFooter>
-          <Button 
-            onClick={handleSubmit}
-            className="w-full bg-safety-yellow hover:bg-safety-yellow/90 text-black"
-          >
-            Add Vendor
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
