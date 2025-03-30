@@ -113,6 +113,7 @@ export default function Dashboard() {
             change="+10% vs. last month" 
             trend="up" 
             icon={Package} 
+            linkTo="/products"
           />
           <StatsCard 
             title="Pending Requests" 
@@ -121,14 +122,16 @@ export default function Dashboard() {
             trend="down" 
             icon={TrendingUp} 
             iconColor="bg-blue-500"
+            linkTo="/device-requests"
           />
           <StatsCard 
-            title="Out of Stock" 
+            title="Pending Transfers" 
             value="11" 
             change="+3% vs. last month" 
             trend="up" 
             icon={Truck} 
             iconColor="bg-purple-500"
+            linkTo="/transfer-requests"
           />
           <StatsCard 
             title="Low Stock Items" 
@@ -137,6 +140,7 @@ export default function Dashboard() {
             trend="down" 
             icon={AlertTriangle} 
             iconColor="bg-red-500"
+            linkTo="/products"
           />
         </div>
         

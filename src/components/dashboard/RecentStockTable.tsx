@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Link } from "react-router-dom";
 
 interface RecentStockItem {
   batchNo: string;
@@ -41,7 +42,14 @@ export function RecentStockTable({ items }: RecentStockTableProps) {
               </TableCell>
               <TableCell>{item.batchCode}</TableCell>
               <TableCell className="text-right">
-                <Button size="sm" variant="default" className="bg-rich-black hover:bg-rich-black/90">More</Button>
+                <Button 
+                  size="sm" 
+                  variant="default" 
+                  className="bg-rich-black hover:bg-rich-black/90"
+                  asChild
+                >
+                  <Link to={`/products/${item.batchNo}`}>More</Link>
+                </Button>
               </TableCell>
             </TableRow>
           ))}
