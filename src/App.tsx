@@ -7,10 +7,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
+import ProductDetail from "./pages/ProductDetail";
 import Declarations from "./pages/Declarations";
+import DeclarationDetail from "./pages/DeclarationDetail";
 import NotFound from "./pages/NotFound";
 import Stores from "./pages/Stores";
 import Tally from "./pages/Tally";
+import TallyDetail from "./pages/TallyDetail";
 import DeviceRequests from "./pages/DeviceRequests";
 import TransferRequests from "./pages/TransferRequests";
 import Eligibility from "./pages/Eligibility";
@@ -34,9 +37,12 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Dashboard />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/declarations" element={<Declarations />} />
+          <Route path="/declarations/:id" element={<DeclarationDetail />} />
           <Route path="/stores" element={<Stores />} />
           <Route path="/tally" element={<Tally />} />
+          <Route path="/tally/:id" element={<TallyDetail />} />
           <Route path="/device-requests" element={<DeviceRequests />} />
           <Route path="/transfer-requests" element={<TransferRequests />} />
           <Route path="/eligibility" element={<Eligibility />} />

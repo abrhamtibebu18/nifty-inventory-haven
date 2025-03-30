@@ -29,6 +29,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
+import { Link } from "react-router-dom";
 
 interface TallyItem {
   id: string;
@@ -138,12 +139,13 @@ export default function Tally() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead width={50}></TableHead>
+                <TableHead className="w-[50px]"></TableHead>
                 <TableHead>User</TableHead>
                 <TableHead>Type</TableHead>
                 <TableHead>Store</TableHead>
                 <TableHead>Facility</TableHead>
                 <TableHead>Status</TableHead>
+                <TableHead className="w-[100px]">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -165,6 +167,11 @@ export default function Tally() {
                     <Badge variant={item.status === "Closed" ? "outline" : "default"} className="bg-green-100 text-green-800 hover:bg-green-100 hover:text-green-800">
                       {item.status}
                     </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Button variant="outline" size="sm" asChild>
+                      <Link to={`/tally/${item.id}`}>View</Link>
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}

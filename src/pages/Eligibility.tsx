@@ -1,159 +1,189 @@
 
-import { useState } from "react";
 import { AppLayout } from "@/components/AppLayout";
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
-} from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Edit } from "lucide-react";
-import { toast } from "sonner";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Search, Filter, ChevronDown, CheckCircle, XCircle, AlertCircle } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
 
-interface EligibilityRecord {
+interface Eligibility {
   id: string;
-  initial: string;
-  user: string;
-  product: string;
-  totalAllowed: number;
-  atHand: number;
-  date: string;
+  name: string;
+  address: string;
+  partnerType: string;
+  submissionDate: string;
+  status: "approved" | "pending" | "declined";
 }
 
 export default function Eligibility() {
-  const [eligibilityRecords, setEligibilityRecords] = useState<EligibilityRecord[]>([
+  const [eligibilities, setEligibilities] = useState<Eligibility[]>([
     {
       id: "1",
-      initial: "L",
-      user: "Leuel Mesfin",
-      product: "WS GPON Terminal",
-      totalAllowed: 3,
-      atHand: 0,
-      date: "Dec 2, 2021 10:53 AM"
+      name: "Jakros Internet Services",
+      address: "Bole Arabsa, Addis Ababa",
+      partnerType: "ISP Partner",
+      submissionDate: "Jan 15, 2023",
+      status: "approved"
     },
     {
       id: "2",
-      initial: "H",
-      user: "Hamdihun Nuru",
-      product: "WS GPON Terminal",
-      totalAllowed: 4,
-      atHand: 0,
-      date: "Dec 2, 2021 10:53 AM"
+      name: "Ethioclick Solutions",
+      address: "Meskel Square, Addis Ababa",
+      partnerType: "Telecom Reseller",
+      submissionDate: "Feb 2, 2023",
+      status: "approved"
     },
     {
       id: "3",
-      initial: "H",
-      user: "Habtamu Addis",
-      product: "WS GPON Terminal",
-      totalAllowed: 3,
-      atHand: 1,
-      date: "Dec 2, 2021 10:55 AM"
+      name: "Habesha Net",
+      address: "Lideta, Addis Ababa",
+      partnerType: "Service Provider",
+      submissionDate: "Mar 10, 2023",
+      status: "pending"
     },
     {
       id: "4",
-      initial: "T",
-      user: "Tewdros Tesfaye",
-      product: "WS GPON Terminal",
-      totalAllowed: 3,
-      atHand: 0,
-      date: "Jan 14, 2022 10:05 AM"
+      name: "Awash Fiber",
+      address: "Kazanchis, Addis Ababa",
+      partnerType: "ISP Partner",
+      submissionDate: "Apr 5, 2023",
+      status: "declined"
     },
     {
       id: "5",
-      initial: "F",
-      user: "Fraol Tabor",
-      product: "WS GPON Terminal",
-      totalAllowed: 3,
-      atHand: 0,
-      date: "Jan 25, 2022 10:50 AM"
+      name: "TelNet Ethiopia",
+      address: "Bole, Addis Ababa",
+      partnerType: "Telecom Reseller",
+      submissionDate: "May 20, 2023",
+      status: "approved"
     },
     {
       id: "6",
-      initial: "T",
-      user: "Tewdros Tesfaye",
-      product: "WS GPON Terminal",
-      totalAllowed: 3,
-      atHand: 0,
-      date: "Jan 25, 2022 10:59 AM"
+      name: "Websprix Net",
+      address: "Sarbet, Addis Ababa",
+      partnerType: "Service Provider",
+      submissionDate: "Jun 8, 2023",
+      status: "pending"
     },
     {
       id: "7",
-      initial: "E",
-      user: "Eyob Solomon",
-      product: "WS GPON Terminal",
-      totalAllowed: 2,
-      atHand: 0,
-      date: "Jan 25, 2022 11:02 AM"
+      name: "Blue Network Solutions",
+      address: "Megenagna, Addis Ababa",
+      partnerType: "ISP Partner",
+      submissionDate: "Jul 17, 2023",
+      status: "approved"
     },
     {
       id: "8",
-      initial: "D",
-      user: "Dexios Mulatu",
-      product: "WS GPON Terminal",
-      totalAllowed: 2,
-      atHand: 4,
-      date: "Jan 25, 2022 11:05 AM"
-    },
-    {
-      id: "9",
-      initial: "S",
-      user: "Seare W/gebriel",
-      product: "WS GPON Terminal",
-      totalAllowed: 8,
-      atHand: 0,
-      date: "Jan 25, 2022 11:09 AM"
-    },
-    {
-      id: "10",
-      initial: "E",
-      user: "Ephrem Tiruneh",
-      product: "WS GPON Terminal",
-      totalAllowed: 3,
-      atHand: 2,
-      date: "Jan 25, 2022 11:13 AM"
+      name: "Fast Connect ISP",
+      address: "Ayat, Addis Ababa",
+      partnerType: "Telecom Reseller",
+      submissionDate: "Aug 3, 2023",
+      status: "declined"
     }
   ]);
   
   const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
   
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
   
-  const filteredRecords = eligibilityRecords.filter(record => 
-    record.user.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    record.product.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-  
-  const handleEdit = (id: string) => {
-    toast.info(`Editing eligibility record ${id}`);
-  };
-  
-  const handleCreateEligibility = () => {
-    toast.info("Creating new eligibility record");
+  const filteredEligibilities = eligibilities.filter(e => {
+    const matchesSearch = 
+      e.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      e.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      e.partnerType.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    if (statusFilter === "all") return matchesSearch;
+    return matchesSearch && e.status === statusFilter;
+  });
+
+  const getStatusBadge = (status: Eligibility['status']) => {
+    switch (status) {
+      case "approved":
+        return (
+          <Badge variant="outline" className="bg-green-100 text-green-800 flex items-center gap-1">
+            <CheckCircle className="h-3.5 w-3.5" />
+            Approved
+          </Badge>
+        );
+      case "pending":
+        return (
+          <Badge variant="outline" className="bg-amber-100 text-amber-800 flex items-center gap-1">
+            <AlertCircle className="h-3.5 w-3.5" />
+            Pending
+          </Badge>
+        );
+      case "declined":
+        return (
+          <Badge variant="outline" className="bg-red-100 text-red-800 flex items-center gap-1">
+            <XCircle className="h-3.5 w-3.5" />
+            Declined
+          </Badge>
+        );
+      default:
+        return null;
+    }
   };
 
   return (
-    <AppLayout title="ELIGIBILITY" subtitle="Overview">
+    <AppLayout title="PARTNER ELIGIBILITY" subtitle="Applications and Status">
       <div className="p-6 space-y-6">
-        <div className="flex justify-between items-center">
-          <div className="relative w-full max-w-md">
+        <div className="flex justify-between items-center gap-4 flex-wrap">
+          <div className="relative grow max-w-md">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <Input
-              placeholder="Search a user by name, etc."
+              placeholder="Search partners by name or location..."
               value={searchQuery}
               onChange={handleSearch}
-              className="pl-4 pr-10"
+              className="pl-10"
             />
           </div>
+          
+          <div className="flex gap-2">
+            <Button 
+              variant="outline" 
+              className={statusFilter === "all" ? "bg-muted" : ""} 
+              onClick={() => setStatusFilter("all")}
+            >
+              All
+            </Button>
+            <Button 
+              variant="outline" 
+              className={statusFilter === "approved" ? "bg-green-100 border-green-200" : ""} 
+              onClick={() => setStatusFilter("approved")}
+            >
+              <CheckCircle className="h-4 w-4 mr-2 text-green-600" />
+              Approved
+            </Button>
+            <Button 
+              variant="outline" 
+              className={statusFilter === "pending" ? "bg-amber-100 border-amber-200" : ""} 
+              onClick={() => setStatusFilter("pending")}
+            >
+              <AlertCircle className="h-4 w-4 mr-2 text-amber-600" />
+              Pending
+            </Button>
+            <Button 
+              variant="outline" 
+              className={statusFilter === "declined" ? "bg-red-100 border-red-200" : ""} 
+              onClick={() => setStatusFilter("declined")}
+            >
+              <XCircle className="h-4 w-4 mr-2 text-red-600" />
+              Declined
+            </Button>
+          </div>
+          
           <Button 
-            onClick={handleCreateEligibility}
-            className="bg-black hover:bg-black/90 text-white"
+            variant="outline" 
+            className="ml-auto"
           >
-            NEW ELIGIBILITY
+            <Filter className="mr-2 h-4 w-4" />
+            More Filters
+            <ChevronDown className="ml-2 h-4 w-4" />
           </Button>
         </div>
         
@@ -161,47 +191,36 @@ export default function Eligibility() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead width={50}></TableHead>
-                <TableHead>Assigned User</TableHead>
-                <TableHead>Product</TableHead>
-                <TableHead>Summary</TableHead>
-                <TableHead className="text-right"></TableHead>
+                <TableHead className="w-12">ID</TableHead>
+                <TableHead>Partner Name</TableHead>
+                <TableHead>Address</TableHead>
+                <TableHead>Partner Type</TableHead>
+                <TableHead>Submission Date</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredRecords.map((record) => (
-                <TableRow key={record.id}>
-                  <TableCell>
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 text-sm font-medium">
-                      {record.initial}
-                    </div>
-                  </TableCell>
-                  <TableCell>{record.user}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center space-x-4">
-                      <div className="h-16 w-16 bg-gray-100 rounded flex items-center justify-center">
-                        WS
-                      </div>
-                      <span>{record.product}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div>Total Allowed: {record.totalAllowed}</div>
-                    <div>At Hand: {record.atHand}</div>
-                  </TableCell>
-                  <TableCell className="text-right">{record.date}</TableCell>
-                  <TableCell>
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={() => handleEdit(record.id)}
-                      className="border-safety-yellow text-safety-yellow hover:bg-safety-yellow hover:text-black"
-                    >
-                      <Edit className="h-4 w-4 mr-2" /> EDIT
-                    </Button>
+              {filteredEligibilities.map((eligibility) => (
+                <TableRow key={eligibility.id}>
+                  <TableCell className="font-medium">{eligibility.id}</TableCell>
+                  <TableCell>{eligibility.name}</TableCell>
+                  <TableCell>{eligibility.address}</TableCell>
+                  <TableCell>{eligibility.partnerType}</TableCell>
+                  <TableCell>{eligibility.submissionDate}</TableCell>
+                  <TableCell>{getStatusBadge(eligibility.status)}</TableCell>
+                  <TableCell className="text-right">
+                    <Button variant="outline" size="sm">View Details</Button>
                   </TableCell>
                 </TableRow>
               ))}
+              {filteredEligibilities.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={7} className="text-center py-10 text-muted-foreground">
+                    No eligibility applications found
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </div>
