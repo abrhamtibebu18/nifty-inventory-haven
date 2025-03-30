@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { 
   Sidebar, 
   SidebarContent,
@@ -27,16 +28,19 @@ import {
   ArrowRightLeft,
   FileSpreadsheet,
   FileCheck,
-  ActivitySquare
+  ActivitySquare,
+  BoxesIcon,
+  PackageCheck
 } from "lucide-react";
 
 export function AppSidebar() {
   const location = useLocation();
+  const isMobile = useIsMobile();
   const isActive = (path: string) => location.pathname === path;
 
   return (
     <Sidebar>
-      <SidebarContent className="p-2">
+      <SidebarContent className={`p-2 ${isMobile ? 'overflow-y-auto max-h-[calc(100vh-60px)]' : ''}`}>
         <div className="flex flex-col gap-1">
           <div className="px-4 py-2 mb-2">
             <h1 className="text-xl font-bold text-safety-yellow">Inventory Hub</h1>
@@ -47,7 +51,7 @@ export function AppSidebar() {
             <SidebarGroupContent>
               <SidebarMenu>
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild className={isActive("/") ? "bg-safety-yellow text-rich-black" : ""}>
+                  <SidebarMenuButton asChild className={isActive("/") || isActive("/dashboard") ? "bg-safety-yellow text-rich-black" : ""}>
                     <Link to="/" className="flex items-center gap-3">
                       <Home size={18} />
                       <span>Home</span>
@@ -96,6 +100,15 @@ export function AppSidebar() {
                     <Link to="/products" className="flex items-center gap-3">
                       <Package size={18} />
                       <span>Products</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild className={isActive("/batches") ? "bg-safety-yellow text-rich-black" : ""}>
+                    <Link to="/batches" className="flex items-center gap-3">
+                      <BoxesIcon size={18} />
+                      <span>Batches</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

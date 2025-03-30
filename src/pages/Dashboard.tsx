@@ -1,4 +1,5 @@
 
+import { useIsMobile } from "@/hooks/use-mobile";
 import { AppLayout } from "@/components/AppLayout";
 import { StatsCard } from "@/components/dashboard/StatsCard";
 import { RecentStockTable } from "@/components/dashboard/RecentStockTable";
@@ -103,10 +104,12 @@ const recentActivity = [
 ];
 
 export default function Dashboard() {
+  const isMobile = useIsMobile();
+  
   return (
     <AppLayout title="DASHBOARD" subtitle="Overview">
-      <div className="container py-6 space-y-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      <div className="container py-4 md:py-6 space-y-6 md:space-y-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
           <StatsCard 
             title="Total Devices" 
             value="1,064" 
@@ -153,8 +156,8 @@ export default function Dashboard() {
           />
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          <div className="lg:col-span-3 space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="lg:col-span-3 space-y-4 md:space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-medium">Recent Stock</h2>
               <a href="/batches" className="text-sm text-safety-yellow">See all →</a>
@@ -174,7 +177,7 @@ export default function Dashboard() {
             <RecentActivity items={recentActivity} />
           </div>
           
-          <div className="space-y-6">
+          <div className="space-y-4 md:space-y-6">
             <InventorySummary categories={inventoryCategories} />
             <div>
               <h2 className="text-lg font-medium mb-4">Quick Actions</h2>
