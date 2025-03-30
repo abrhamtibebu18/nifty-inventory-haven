@@ -1,9 +1,10 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Package, BarChart3, FileText, Store, Building, Users } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Package, BarChart3, Store, Building, Users } from "lucide-react";
 import { toast } from "sonner";
+
+// Import the new dialogs
 import { CreateStoreDialog } from "@/components/dialogs/CreateStoreDialog";
 import { CreateTallyDialog } from "@/components/dialogs/CreateTallyDialog";
 import { AddProductDialog } from "@/components/dialogs/AddProductDialog";
@@ -16,10 +17,6 @@ export function QuickActions() {
   const [productDialogOpen, setProductDialogOpen] = useState(false);
   const [vendorDialogOpen, setVendorDialogOpen] = useState(false);
   const [facilityDialogOpen, setFacilityDialogOpen] = useState(false);
-
-  const handleClick = (name: string) => {
-    toast(`Navigating to ${name}`);
-  };
 
   return (
     <>

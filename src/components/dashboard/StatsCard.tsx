@@ -24,7 +24,7 @@ export function StatsCard({
 }: StatsCardProps) {
   return (
     <Link to={linkTo}>
-      <Card className="transition-all duration-200 hover:shadow-md hover:translate-y-[-4px] cursor-pointer">
+      <Card className="transition-all duration-200 hover:shadow-md hover:translate-y-[-4px] hover:border-safety-yellow cursor-pointer">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">{title}</CardTitle>
           <div className={`rounded-full p-2 ${iconColor}`}>

@@ -48,7 +48,7 @@ export function RecentStockTable({ items }: RecentStockTableProps) {
                   className="bg-rich-black hover:bg-rich-black/90"
                   asChild
                 >
-                  <Link to={`/products/${item.batchNo}`}>More</Link>
+                  <Link to={`/batches/${item.batchNo}`}>More</Link>
                 </Button>
               </TableCell>
             </TableRow>

@@ -6,7 +6,7 @@ import { InventorySummary } from "@/components/dashboard/InventorySummary";
 import { YourDevicesTable } from "@/components/dashboard/YourDevicesTable";
 import { RecentActivity } from "@/components/dashboard/RecentActivity";
 import { QuickActions } from "@/components/dashboard/QuickActions";
-import { Package, TrendingUp, Truck, AlertTriangle } from "lucide-react";
+import { Package, TrendingUp, Truck, AlertTriangle, FileText } from "lucide-react";
 
 // Sample data
 const recentStock = [
@@ -106,7 +106,7 @@ export default function Dashboard() {
   return (
     <AppLayout title="DASHBOARD" subtitle="Overview">
       <div className="container py-6 space-y-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
           <StatsCard 
             title="Total Devices" 
             value="1,064" 
@@ -142,25 +142,34 @@ export default function Dashboard() {
             iconColor="bg-red-500"
             linkTo="/products"
           />
+          <StatsCard 
+            title="Incomplete Declarations" 
+            value="5" 
+            change="+2 new" 
+            trend="up" 
+            icon={FileText} 
+            iconColor="bg-orange-500"
+            linkTo="/declarations"
+          />
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           <div className="lg:col-span-3 space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-medium">Recent Stock</h2>
-              <a href="#" className="text-sm text-safety-yellow">See all →</a>
+              <a href="/batches" className="text-sm text-safety-yellow">See all →</a>
             </div>
             <RecentStockTable items={recentStock} />
             
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-medium">Your Devices</h2>
-              <a href="#" className="text-sm text-safety-yellow">View all →</a>
+              <a href="/your-devices" className="text-sm text-safety-yellow">View all →</a>
             </div>
             <YourDevicesTable devices={yourDevices} />
             
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-medium">Recent Activity</h2>
-              <a href="#" className="text-sm text-safety-yellow">View all →</a>
+              <a href="/activity" className="text-sm text-safety-yellow">View all →</a>
             </div>
             <RecentActivity items={recentActivity} />
           </div>

@@ -1,63 +1,64 @@
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Toaster } from "./components/ui/sonner";
+
+// Import pages
+import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
-import Declarations from "./pages/Declarations";
-import DeclarationDetail from "./pages/DeclarationDetail";
-import NotFound from "./pages/NotFound";
 import Stores from "./pages/Stores";
-import Tally from "./pages/Tally";
-import TallyDetail from "./pages/TallyDetail";
 import DeviceRequests from "./pages/DeviceRequests";
 import TransferRequests from "./pages/TransferRequests";
-import Eligibility from "./pages/Eligibility";
-import Devices from "./pages/Devices";
+import Vendors from "./pages/Vendors";
+import Tally from "./pages/Tally";
+import TallyDetail from "./pages/TallyDetail";
 import YourDevices from "./pages/YourDevices";
 import Facilities from "./pages/Facilities";
-import Vendors from "./pages/Vendors";
+import Activity from "./pages/Activity";
+import Declarations from "./pages/Declarations";
+import DeclarationDetail from "./pages/DeclarationDetail";
 import Anomalies from "./pages/Anomalies";
 import Reports from "./pages/Reports";
-import Activity from "./pages/Activity";
+import Eligibility from "./pages/Eligibility";
+import Devices from "./pages/Devices";
+import Batches from "./pages/Batches";
+import NotFound from "./pages/NotFound";
 
-const queryClient = new QueryClient();
+import "./App.css";
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/products/:id" element={<ProductDetail />} />
+        <Route path="/stores" element={<Stores />} />
+        <Route path="/device-requests" element={<DeviceRequests />} />
+        <Route path="/transfer-requests" element={<TransferRequests />} />
+        <Route path="/vendors" element={<Vendors />} />
+        <Route path="/tally" element={<Tally />} />
+        <Route path="/tally/:id" element={<TallyDetail />} />
+        <Route path="/your-devices" element={<YourDevices />} />
+        <Route path="/facilities" element={<Facilities />} />
+        <Route path="/activity" element={<Activity />} />
+        <Route path="/declarations" element={<Declarations />} />
+        <Route path="/declarations/:id" element={<DeclarationDetail />} />
+        <Route path="/anomalies" element={<Anomalies />} />
+        <Route path="/reports" element={<Reports />} />
+        <Route path="/eligibility" element={<Eligibility />} />
+        <Route path="/devices" element={<Devices />} />
+        <Route path="/batches" element={<Batches />} />
+        <Route path="/batches/:id" element={<ProductDetail />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
       <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/:id" element={<ProductDetail />} />
-          <Route path="/declarations" element={<Declarations />} />
-          <Route path="/declarations/:id" element={<DeclarationDetail />} />
-          <Route path="/stores" element={<Stores />} />
-          <Route path="/tally" element={<Tally />} />
-          <Route path="/tally/:id" element={<TallyDetail />} />
-          <Route path="/device-requests" element={<DeviceRequests />} />
-          <Route path="/transfer-requests" element={<TransferRequests />} />
-          <Route path="/eligibility" element={<Eligibility />} />
-          <Route path="/devices" element={<Devices />} />
-          <Route path="/your-devices" element={<YourDevices />} />
-          <Route path="/facilities" element={<Facilities />} />
-          <Route path="/vendors" element={<Vendors />} />
-          <Route path="/anomalies" element={<Anomalies />} />
-          <Route path="/reports" element={<Reports />} />
-          <Route path="/activity" element={<Activity />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+    </Router>
+  );
+}
 
 export default App;
