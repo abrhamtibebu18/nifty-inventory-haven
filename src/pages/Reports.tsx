@@ -113,6 +113,14 @@ const monthlyDefectRate = [
 const COLORS = ["#FFCD00", "#FFE069", "#FFAA00", "#333333"];
 const DEFECT_COLORS = ["#EF4444", "#10B981"];
 
+const checkedDevices = [
+  { name: "3G/4G Wireless N Router", beginning: 50, checkedIn: 32, checkedOut: 40, ending: 42 },
+  { name: "UISP airMAX NanoStation", beginning: 30, checkedIn: 45, checkedOut: 38, ending: 37 },
+  { name: "UISP Fiber NanoG", beginning: 25, checkedIn: 18, checkedOut: 22, ending: 21 },
+  { name: "Network Switch", beginning: 40, checkedIn: 28, checkedOut: 33, ending: 35 },
+  { name: "Cable Modem", beginning: 35, checkedIn: 15, checkedOut: 19, ending: 31 }
+];
+
 export default function Reports() {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
